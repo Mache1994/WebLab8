@@ -47,6 +47,17 @@ const ListBlogs = {
 		return false;
 	},
 
+	verifyAuthor : function(author){
+		let blog = [{}];
+
+		blogDB.forEach(item => {
+		if ( author == item.author ){
+		 	blog.push(item);
+		}
+	});
+		return blog;
+	},
+
 
 	pushF : function (item){
 		blogDB.push(item);

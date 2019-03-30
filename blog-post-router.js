@@ -32,24 +32,25 @@ router.get('/blog-posts/:author', (req, res) => {
 	let Blogs = [];
 	let empty = true;
  
-	blogArray.forEach(item => {
-		if (item.author == Tauthor){
-			empty = false;
-			Blogs.push(item);
-		}
+	let infoOfSomeBlogs = ListBlogs.verifyAuthor(Tauthor);
+
+
+if (infoOfSomeBlogs)
+		{
+		res.status(200).json({
+		message : "Successfully sent the list of selected author",
+		status : 200,
+		sports : infoOfSomeBlogs
 	});
-	if(empty){
-	res.status(404).json({
-		message : "Author not found in the list",
-		status : 404
-	});
-	}
-else
-	res.status(200).json({
-				message : "Successfully sent the blog by the author",
-				status : 200,
-				Blogs : Blogs
-			});
+		} 
+	else{
+
+	res.status(400).json({
+			message : "No author was found with that name.",
+			status : 400
+		})
+		return next();
+}
 
 	
 } else
