@@ -111,7 +111,7 @@ let requiredFields = ['id'];
  	if(!(currentField in req.body)){
 
 	res.status(400).json({
-		message: " Mising iD",
+		message: " Mising iD in body",
 		status: 400
 		});
 
@@ -123,35 +123,45 @@ let requiredFields = ['id'];
  let Id2 = req.body.id;
 
 if (Id1 == Id2){
- blogArray.forEach((item,index) =>{
- 	if (item.id == Id1){
- 		blogArray.splice(index,1)
-	res.status(202).json({
-		message: " object deleted",
-		status: 202
-		});
- 	}
 
-
- });
+	if (!ListBlogs.deleteById(Id1))
+	{
+		res.status(202).json({
+			message : "Object Deleted.",
+			status : 202
+		})
+		
+	}
+	else
+	{
+		res.status(400).json({
+			message : "No id was found in the list.",
+			status : 400
+		})
+		return next();
+	}
 }
-else
+else{
 	res.status(400).json({
 		message: "parameters dont match",
 		status: 400
 		});
+	return next();
+}
 
 res.status(404).json({
 		message: "object not found",
 		status: 404
 		});
+return next();
 
 }
 else
 res.status(406).json({
-		message: "mising argument",
+		message: "mising id in arguments",
 		status: 406
 		});
+return next();
 
 });
 

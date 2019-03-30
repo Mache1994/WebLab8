@@ -47,6 +47,20 @@ const ListBlogs = {
 		return false;
 	},
 
+
+		deleteById : function(id){
+
+		blogDB.forEach((item,index) => {
+		if ( id == item.id ){
+			blogDB.splice (index,1);
+		 	return true
+		}
+	});
+		return false;
+	},
+
+
+
 	verifyAuthor : function(author){
 		let blog = [{}];
 
