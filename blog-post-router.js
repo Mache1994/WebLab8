@@ -100,7 +100,7 @@ router.post('/post-blog',(req, res, next) => {
 
 //
 
-router.delete('/delete-blog/:id',(req,res) =>{
+router.delete('/delete-blog/:id',(req,res,next) =>{
 if(req.params.id){
 let Id1 = req.params.id;
 let requiredFields = ['id'];
@@ -167,7 +167,7 @@ return next();
 
 // put
 
-router.put('/blog-posts/:id',(req,res) =>{
+router.put('/blog-posts/:id',(req,res,next) =>{
 if(req.params.id){
 let Id1 = req.params.id;
 let requiredFields = ['id'];
@@ -190,46 +190,55 @@ let requiredFields = ['id'];
  let Id2 = req.body.id;
 
 if (Id1 == Id2){
- blogArray.forEach((item,index) =>{
- 	if (item.id == Id1){
+
+ 	if (!ListBlogs.verifyId(Id1)){
 
  			if (req.body.title)
- 			blogArray[index].title = req.body.title
-			if (req.body.content)
- 			blogArray[index].content = req.body.content
- 			if (req.body.Author)
- 			blogArray[index].author = req.body.Author
- 			if (req.body.Date)
- 			blogArray[index].publishDate = req.body.Date
+ 			ListBlogs.updateTitle(Id1,req.body.title)
+ 		if (req.body.content)
+ 			ListBlogs.updateContent(Id1,req.body.content)
+ 		if (req.body.Author)
+ 			ListBlogs.updateAutor(Id1,req.body.Author)
+ 		if (req.body.Date)
+ 			ListBlogs.updateDate(Id1,req.body.Date)
+
 
 
 	res.status(200).json({
 		message: " object updated",
 		status: 200
 		});
+	return next();
+ 	}
+ 	else
+ 	{
+
+ 		res.status(404).json({
+		message: "object not found",
+		status: 404
+		});
+		return next();
  	}
 
-
- });
 }
-else
+else{
 	res.status(400).json({
 		message: "parameters dont match",
 		status: 400
 		});
+	return next();
+}
 
-res.status(404).json({
-		message: "object not found",
-		status: 404
-		});
+
 
 }
-else
+else{
 res.status(406).json({
 		message: "mising argument",
 		status: 406
 		});
-
+return next();
+}
 });
 
 module.exports = router;

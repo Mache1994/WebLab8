@@ -59,6 +59,56 @@ const ListBlogs = {
 		return false;
 	},
 
+		updateTitle : function(id, title){
+
+		blogDB.forEach((item,index) => {
+		if ( id == item.id )
+		{
+			blogDB[index].title = title;
+		}
+											});
+
+
+		},
+
+
+		updateContent : function(id, content){
+
+			blogDB.forEach((item,index) => {
+		if ( id == item.id )
+		{
+			blogDB[index].content = content;
+		}
+											});
+
+
+		}, 
+
+		updateAutor : function(id, author){
+
+			blogDB.forEach((item,index) => {
+		if ( id == item.id )
+		{
+			blogDB[index].author = author;
+		}
+											});
+
+
+		},
+
+		
+
+		updateDate : function(id, date){
+
+			blogDB.forEach((item,index) => {
+		if ( id == item.id )
+		{
+			blogDB[index].publishDate = date;
+		}
+											});
+
+		},
+
 
 
 	verifyAuthor : function(author){
