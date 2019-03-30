@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {ListBlogs} = require('./blog-post-model');
+const uuidv4 = require('uuid/v4')
 
 
 
@@ -42,6 +43,7 @@ if (infoOfSomeBlogs)
 		status : 200,
 		sports : infoOfSomeBlogs
 	});
+
 		} 
 	else{
 
@@ -58,7 +60,7 @@ res.status(404).json({
 		message : "No author sent",
 		status : 404
 	});
-
+return next();
 
 });	
 
@@ -88,7 +90,7 @@ router.post('/post-blog',(req, res, next) => {
 	
 	};
 
-	blogArray.push(objectToAdd);
+	ListBlogs.pushF(objectToAdd);
 	res.status(201).json({
 		message : "Successfully added the blog",
 		status : 201,
